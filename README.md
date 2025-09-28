@@ -50,21 +50,29 @@ pip install -r requirements.txt
 
 ```text
 project/
-├── .venv/                      # 가상환경 (깃허브 업로드 시 제외 권장: .gitignore 처리)
-├── checkpoint/                 # 모델 학습 중간 저장 가중치
-├── chest_xray/                 # Classification용 데이터셋 (Kaggle Pneumonia)
-├── dataset_det/                # Detection용 데이터셋 (RSNA Pneumonia)
-├── pytorch_classification/     # Classification 관련 코드
-│   ├── train_classification.py
-│   ├── predict_classification.py
-│   └── data_load.py
-├── pytorch_detection/          # Detection 관련 코드
-│   ├── train_detection.py
-│   ├── predict_detection.py
-│   └── rsna_dataset.py
-├── pneumonia_resnet18.pth      # 학습 완료된 Classification 모델 가중치
-├── requirements.txt            # 환경 패키지 목록
-└── README.md                   # 프로젝트 설명 문서
+├── checkpoint/                           # 모델 학습 중간 저장 가중치
+├── chest_xray/                           # Classification 데이터셋 (Kaggle Pneumonia)
+├── rsna-pnemonia-detection-challenge/    # Detection 데이터셋 (RSNA Pneumonia)
+│
+├── pytorch_classification/               # Classification 코드
+│   ├── data_load.py                      # 데이터 로딩 및 전처리
+│   ├── eval.py                           # 평가 스크립트
+│   ├── grad_cam.py                       # Grad-CAM 시각화
+│   ├── inference.py                      # 추론 스크립트
+│   ├── model.py                          # 모델 정의 (ResNet18 등)
+│   └── train.py                          # 학습 스크립트
+│
+├── pytorch_detection/                    # Detection 코드
+│   ├── inference.py                      # 추론 스크립트
+│   ├── model.py                          # 모델 정의 (Faster R-CNN 등)
+│   ├── rsna_dataset.py                   # RSNA 데이터셋 로더
+│   ├── train_with_checkpoint_part1.py    # 학습 스크립트 (1)
+│   └── train_with_checkpoint_part2.py    # 학습 스크립트 (2, 이어서 학습)
+│
+├── pneumonia_resnet18.pth                # 학습 완료된 Classification 모델 가중치
+├── requirements.txt                      # 환경 패키지 목록
+└── README.md                             # 프로젝트 설명 문서
+
 ```
 
 ## 🚀 실행 방법
@@ -103,16 +111,18 @@ python predict_detection.py --image <image_path>
 
 ### 🔹 Classification (ResNet18)
 - Confusion Matrix  
-  ![Confusion Matrix](images/confusion_matrix.png)  
-- Grad-CAM (모델의 시각적 설명)  
-  ![Grad-CAM](images/grad_cam.png)  
+  ![Confusion Matrix](images/Confusion_Matrix_img.png)  
+- Normal Grad-CAM 
+  ![Grad-CAM](images/Grad_CAM_normal.png)
+- Normal Grad-CAM 
+  ![Grad-CAM](images/Grad_CAM_PNEUMONIA.png)  
 
 
 ### 🔹 Detection (Faster R-CNN)
 - Loss Curve  
   ![Loss Curve](images/loss_curve.png)  
 - Detection Example (X-ray 상 병변 탐지)  
-  ![Detection Example](images/detection_example.png)  
+  ![Detection Example](images/Detection_PNEUMONIA.png)  
 
 
 
